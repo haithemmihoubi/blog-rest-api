@@ -1,11 +1,13 @@
 package com.haithem.blog.exception;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class ResourceNotFoundException extends RuntimeException {
     private String resourceName;
     private String fieldName;
     private String fieldValue;
-
-
 
 
     public ResourceNotFoundException(String resourceName, String fieldName, String fieldValue) {
@@ -14,6 +16,21 @@ public class ResourceNotFoundException extends RuntimeException {
         this.fieldName = fieldName;
         this.fieldValue = fieldValue;
     }
+
+    //  get methods
+    public String getResourceName() {
+        return resourceName;
+    }
+
+    public String getFieldName() {
+        return fieldName;
+    }
+
+    public String getFieldValue() {
+        return fieldValue;
+    }
+
+
 }
 
 // creating a custom execption class that extends the RuntimeException class
