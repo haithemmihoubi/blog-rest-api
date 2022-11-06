@@ -8,8 +8,6 @@ public class PostDto {
     private String title;
     private String description;
     private String content;
-
-
 }
 //Post data transfer object
 // this class will be used to transfer data from the client to the server
@@ -20,3 +18,4 @@ public class PostDto {
 // 4- content : the content of the post
 // this class will contain the following annotations:
 // 1- @Data : this annotation will generate getters and setters for all the fields
+
