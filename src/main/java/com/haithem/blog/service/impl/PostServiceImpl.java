@@ -1,6 +1,7 @@
 package com.haithem.blog.service.impl;
 
 import com.haithem.blog.entity.Post;
+import com.haithem.blog.exception.ResourceNotFoundException;
 import com.haithem.blog.payload.PostDto;
 import com.haithem.blog.repository.PostRepository;
 import com.haithem.blog.service.PostService;
@@ -56,8 +57,29 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<PostDto> getAllPosts() {
         List<Post> posts = postRepository.findAll();
+
+
         return posts.stream().map(this::MapToDto).collect(Collectors.toList());
 
+    }
+
+    // gte post by id
+    @Override
+    public PostDto getPostById(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post ", id,id));
+        return MapToDto(post);
+
+    }
+
+   // update post by id
+    @Override
+    public PostDto updatePostById(Long id, PostDto postDto) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post ", id,id));
+        post.setContent(postDto.getContent());
+        post.setDescription(postDto.getDescription());
+        post.setTitle(postDto.getTitle());
+        Post updatedPost = postRepository.save(post);
+        return MapToDto(updatedPost);
     }
 
 

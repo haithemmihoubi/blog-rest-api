@@ -14,25 +14,38 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+
     public PostController(PostService postService) {
         this.postService = postService;
     }
+
     //? create a post method
     // this method will take a postDto as a parameter and will return a postDto
     // this method will be mapped to the following url : /api/posts and will accept POST requests
     @PostMapping
-    public ResponseEntity<PostDto> createPost(@RequestBody  PostDto postDto){
+    public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto) {
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
     }
 
 
     // get all posts
     @GetMapping
-    public List<PostDto> getAllPosts(){
+    public List<PostDto> getAllPosts() {
         return postService.getAllPosts();
     }
 
+    // get post by id
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDto> getPostById(@PathVariable Long id) {
+        return ResponseEntity.ok(postService.getPostById(id));
+    }
 
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PostDto> updatePostById(@RequestBody PostDto postDto, @PathVariable Long id) {
+        return new ResponseEntity<PostDto>(postService.updatePostById(id, postDto), HttpStatus.CREATED);
+
+    }
 
 
 }
