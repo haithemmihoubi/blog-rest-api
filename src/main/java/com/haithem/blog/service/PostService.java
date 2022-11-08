@@ -10,7 +10,7 @@ public interface PostService {
  // get post by id
     PostDto getPostById(Long id);
 
-
      PostDto updatePostById(Long id , PostDto postDto) ;
+     PostDto deletePostById(Long id) ;
 
 }

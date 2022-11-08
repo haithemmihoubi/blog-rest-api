@@ -61,25 +61,40 @@ public class PostServiceImpl implements PostService {
 
         return posts.stream().map(this::MapToDto).collect(Collectors.toList());
 
+
     }
 
     // gte post by id
     @Override
     public PostDto getPostById(Long id) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post ", id,id));
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post ", id, id));
         return MapToDto(post);
 
     }
 
-   // update post by id
+    // update post by id
     @Override
     public PostDto updatePostById(Long id, PostDto postDto) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post ", id,id));
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post ", id, id));
         post.setContent(postDto.getContent());
         post.setDescription(postDto.getDescription());
         post.setTitle(postDto.getTitle());
         Post updatedPost = postRepository.save(post);
         return MapToDto(updatedPost);
+    }
+
+
+    // delete post by id
+    @Override
+    public PostDto deletePostById(Long id) {
+        Post p = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post ", id, id));
+        if (p != null) {
+            postRepository.delete(p);
+
+        }
+        return MapToDto(p);
+
+
     }
 
 

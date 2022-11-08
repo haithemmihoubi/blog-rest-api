@@ -3,6 +3,7 @@ package com.haithem.blog.controller;
 import com.haithem.blog.entity.Post;
 import com.haithem.blog.payload.PostDto;
 import com.haithem.blog.service.PostService;
+import com.haithem.blog.service.impl.PostServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +14,9 @@ import java.util.List;
 @RequestMapping("/api/posts")
 public class PostController {
 
-    private final PostService postService;
+    private final PostServiceImpl postService;
 
-    public PostController(PostService postService) {
+    public PostController(PostServiceImpl postService) {
         this.postService = postService;
     }
 
@@ -46,6 +47,10 @@ public class PostController {
         return new ResponseEntity<PostDto>(postService.updatePostById(id, postDto), HttpStatus.CREATED);
 
     }
+   @DeleteMapping("/{id}")
+    public ResponseEntity<PostDto> deletePostById(@PathVariable Long id) {
+        return new ResponseEntity<PostDto>(postService.deletePostById(id), HttpStatus.OK);
 
+    }
 
 }
