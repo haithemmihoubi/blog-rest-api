@@ -57,12 +57,14 @@ public class PostServiceImpl implements PostService {
 
     }
 
+
+
     @Override
     public PostResponse getAllPosts(int pageNo, int pageSize,String sortBy,String sortDirection) {
-        Sort sort = Sort.by(sortBy);
+        Sort sort = sortDirection.equalsIgnoreCase(SortDirection.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 
  // create a page request object with get two parameters pageNo and pageSize
-        PageRequest pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        PageRequest pageable = PageRequest.of(pageNo, pageSize, sort);
         // get all posts from the database using the find all   method which is provided by the spring data jpa
         Page<Post>  posts = postRepository.findAll(pageable);
         // get content from the page
@@ -115,4 +117,8 @@ public class PostServiceImpl implements PostService {
     }
 
 
+}
+enum  SortDirection {
+    ASC,
+    DESC
 }

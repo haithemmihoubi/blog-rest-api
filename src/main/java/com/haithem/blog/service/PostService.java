@@ -5,7 +5,7 @@ import com.haithem.blog.payload.PostResponse;
 
 public interface PostService {
     PostDto createPost(PostDto postDto);
-   PostResponse getAllPosts(int pageNo, int pageSize,String sortBy);
+   PostResponse getAllPosts(int pageNo, int pageSize,String sortBy,String sortDirection);
  // get post by id
     PostDto getPostById(Long id);
 

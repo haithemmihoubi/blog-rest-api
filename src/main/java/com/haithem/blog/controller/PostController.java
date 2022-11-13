@@ -39,7 +39,7 @@ public class PostController {
                                     @RequestParam(value = "sortDirection", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDirection) {
 
 
-        return postService.getAllPosts(pageNo, pageSize, sortBy);
+        return postService.getAllPosts(pageNo, pageSize, sortBy, sortDirection);
     }
 
     // get post by id
