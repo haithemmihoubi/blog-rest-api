@@ -1,12 +1,11 @@
 package com.haithem.blog.service;
 
 import com.haithem.blog.payload.PostDto;
-
-import java.util.List;
+import com.haithem.blog.payload.PostResponse;
 
 public interface PostService {
     PostDto createPost(PostDto postDto);
-    List<PostDto> getAllPosts(int pageNo, int pageSize);
+   PostResponse getAllPosts(int pageNo, int pageSize,String sortBy);
  // get post by id
     PostDto getPostById(Long id);
 
