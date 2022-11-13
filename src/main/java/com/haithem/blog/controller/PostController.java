@@ -14,9 +14,9 @@ import java.util.List;
 @RequestMapping("/api/posts")
 public class PostController {
 
-    private final PostServiceImpl postService;
+    private final PostService postService;
 
-    public PostController(PostServiceImpl postService) {
+    public PostController(PostService postService) {
         this.postService = postService;
     }
 
@@ -31,8 +31,8 @@ public class PostController {
 
     // get all posts
     @GetMapping
-    public List<PostDto> getAllPosts() {
-        return postService.getAllPosts();
+    public List<PostDto> getAllPosts(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo, @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
+        return postService.getAllPosts(pageNo, pageSize);
     }
 
     // get post by id
@@ -45,12 +45,11 @@ public class PostController {
     @PutMapping("/{id}")
     public ResponseEntity<PostDto> updatePostById(@RequestBody PostDto postDto, @PathVariable Long id) {
         return new ResponseEntity<PostDto>(postService.updatePostById(id, postDto), HttpStatus.CREATED);
-
     }
-   @DeleteMapping("/{id}")
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<PostDto> deletePostById(@PathVariable Long id) {
         return new ResponseEntity<PostDto>(postService.deletePostById(id), HttpStatus.OK);
-
     }
 
 }

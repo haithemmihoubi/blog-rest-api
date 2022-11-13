@@ -5,8 +5,9 @@ import com.haithem.blog.exception.ResourceNotFoundException;
 import com.haithem.blog.payload.PostDto;
 import com.haithem.blog.repository.PostRepository;
 import com.haithem.blog.service.PostService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,11 +56,14 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPosts() {
-        List<Post> posts = postRepository.findAll();
-
-
-        return posts.stream().map(this::MapToDto).collect(Collectors.toList());
+    public List<PostDto> getAllPosts(int pageNo, int pageSize) {
+ // create a page request object with get two parameters pageNo and pageSize
+        PageRequest pageable = PageRequest.of(pageNo, pageSize);
+        // get all posts from the database using the find all   method which is provided by the spring data jpa
+        Page<Post>  posts = postRepository.findAll(pageable);
+        // get content from the page
+        List<Post> postList = posts.getContent();
+        return postList.stream().map(this::MapToDto).collect(Collectors.toList());
 
 
     }
