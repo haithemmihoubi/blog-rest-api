@@ -6,6 +6,7 @@ import com.haithem.blog.payload.PostDto;
 import com.haithem.blog.payload.PostResponse;
 import com.haithem.blog.repository.PostRepository;
 import com.haithem.blog.service.PostService;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -16,31 +17,25 @@ import java.util.stream.Collectors;
 @Service
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
+    private final ModelMapper mapper;
 
-    public PostServiceImpl(PostRepository postRepository) {
+    public PostServiceImpl(PostRepository postRepository, ModelMapper mapper1) {
         this.postRepository = postRepository;
+        this.mapper = mapper1;
     }
     // map  entities to DTOs
 
     // map  dto to entities
 
     PostDto MapToDto(Post post) {
-        PostDto postDto = new PostDto();
-        postDto.setContent(post.getContent());
-        postDto.setDescription(post.getDescription());
-        postDto.setTitle(post.getTitle());
-        postDto.setId(post.getId());
+        PostDto postDto = mapper.map(post, PostDto.class);
         return postDto;
 
     }
 
     // map  dto to entities
     private Post mapToEntity(PostDto postDto) {
-        Post post = new Post();
-        post.setContent(postDto.getContent());
-        post.setDescription(postDto.getDescription());
-        post.setTitle(postDto.getTitle());
-        post.setId(postDto.getId());
+        Post post =  mapper.map(postDto, Post.class);
         return post;
 
     }
