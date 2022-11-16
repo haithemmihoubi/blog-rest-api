@@ -1,13 +1,18 @@
 package com.haithem.blog.payload;
 
+import com.haithem.blog.entity.Comment;
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
+
 public class PostDto {
     private Long id;
     private String title;
     private String description;
     private String content;
+    private Set<CommentDto> comments;
 }
 //Post data transfer object
 // this class will be used to transfer data from the client to the server
